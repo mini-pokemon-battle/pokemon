@@ -1,6 +1,7 @@
 <template>
-    <div>
+    <div class="d-flex battle">
         <player/>
+        <player />
     </div>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div>
-      <b-card bg-variant="warning" text-variant="black" title="Card Title">
+    <div class="rooms mt-4">
+      <b-card bg-variant="warning" text-variant="black" title="group name">
         <b-card-text><h5> Player: </h5>
         </b-card-text>
         <b-button href="#" variant="primary">Join</b-button>
@@ -16,4 +16,7 @@ export default {};
 </script>
 
 <style>
+.rooms {
+  width: 50rem;
+}
 </style>

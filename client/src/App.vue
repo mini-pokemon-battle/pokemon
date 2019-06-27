@@ -1,15 +1,32 @@
 <template>
   <div id="app">
     <div class="container">
-      <div class="form-input">
-        <userInput/>
+      <div class="row">
+        <div class="col d-flex justify-content-center form-input">
+          <userInput/>
+        </div>
       </div>
-      <div class="rooms">
-        <roomlist/>
+      <div class="row border">
+        <div class="col d-flex justify-content-center">
+          <roomlist/>
+        </div>
       </div>
-      <pokemonlist/>
-      <playing/>
+      <div class="row border">
+        <div class="col d-flex justify-content-center">
+          <pokemonlist/>
+        </div>
+      </div>
+      <div class="row border">
+        <div class="col d-flex justify-content-center">
+          <playing/>
+          <playing/>
+        </div>
+      </div>
+      <div class="row border">
+        <div class="col d-flex justify-content-center">
       <winner/>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -49,10 +66,9 @@ export default {
 }
 
 .form-input {
-  width: 20rem;
+  width: 40rem;
+  /* margin-top: 10rem; */
+    
 }
 
-.rooms {
-  width: 30rem;
-}
 </style>

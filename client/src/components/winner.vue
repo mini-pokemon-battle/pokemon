@@ -2,7 +2,7 @@
   <div>
     <b-card
       title="You Win"
-      img-src="https://picsum.photos/600/300/?image=25"
+      img-src="https://i.imgur.com/jzXM4lA.gif"
       img-alt="Image"
       img-top
       style="max-width: 20rem;"
