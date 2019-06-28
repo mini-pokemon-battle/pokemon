@@ -2,14 +2,14 @@
   <div id="app">
     <div class="container">
       <div v-if="(roomstatus == 'pending' || roomstatus == '') && !createdRoom">
-        <div class="row">
+        <div class="row" v-if="!isLogin">
           <div class="col d-flex justify-content-center form-input">
-            <userInput/>
+            <userInput @loginstatus='loginstatus'/>
           </div>
         </div>
-        <div class="row border">
+        <div class="row border" v-if="isLogin">
           <div class="col d-flex justify-content-center">
-            <roomlist/>
+            <roomlist @createdroom="createdroom"/>
           </div>
         </div>
       </div>
@@ -58,60 +58,32 @@ export default {
   },
   data() {
     return {
-      namaroom: "",
-      nama: "",
       roomstatus: "",
-      createdRoom: false
+      createdRoom: false,
+      isLogin: false
     };
   },
   computed: {
     listrooms() {
       return this.$store.state.rooms;
     },
+    listpokemon() {
+      return this.$store.state.pokemonlists;
+    },
     currentroom() {
       return this.$store.state.currentRoom;
     }
   },
   methods: {
-    login() {
-      localStorage.setItem("name", this.nama);
-      this.name = "";
+    createdroom(data){
+      this.createdRoom = data
+    },
+    loginstatus(data){
+      this.isLogin = data
     },
     gameFinish() {
       this.$store.dispatch("GAMEFINISH", this.currentroom.id);
     },
-    createRoom() {
-      let data = {
-        name: this.namaroom,
-        players: [
-          {
-            name: localStorage.name,
-            status: "player 1"
-          }
-        ],
-        status: "pending",
-        pokemons: []
-      };
-      this.$store.dispatch("CREATEROOM", data);
-      this.namaroom = "";
-      this.createdRoom = true;
-    },
-    joinRoom(id) {
-      console.log("dapat current room");
-      this.$store.dispatch("GETCURRENTROOM", id);
-    },
-    joincurrentroom(id) {
-      console.log("masuk", this.currentroom.players);
-      if (
-        localStorage.name == this.currentroom.players.name ||
-        this.currentroom.players.length == 2
-      ) {
-        alert("cannot join");
-      } else {
-        alert("join");
-        this.$store.dispatch("UPDATEROOM", id);
-      }
-    }
   },
   watch: {
     currentroom() {
@@ -127,6 +99,10 @@ export default {
   },
   mounted() {
     this.$store.dispatch("GETALLROOMS");
+    this.$store.dispatch("GETALLPOKEMON");
+    if (localStorage.name) {
+      this.isLogin = true;
+    }
   }
 };
 </script>

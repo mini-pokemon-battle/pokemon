@@ -34,7 +34,20 @@ export default {
   },
   methods: {
     createRoom() {
-      console.log(this.roomname);
+      let data = {
+        name: this.roomname,
+        players: [
+          {
+            name: localStorage.name,
+            status: "player 1"
+          }
+        ],
+        status: "pending",
+        pokemons: []
+      };
+      this.$store.dispatch("CREATEROOM", data);
+      this.roomname = "";
+      this.$emit('createdroom', true)
     },
     resetModal() {
       this.roomname = "";

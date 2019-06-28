@@ -7,11 +7,15 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     rooms: [],
-    currentRoom: ''
+    currentRoom: '',
+    pokemonlists: []
   },
   mutations: {
     ROOMLIST(state, data) {
       state.rooms = data
+    },
+    POKEMONLIST(state, data) {
+      state.pokemonlists = data
     },
     CURRENTROOM(state, data) {
       state.currentRoom = data
@@ -50,6 +54,19 @@ export default new Vuex.Store({
             })
           })
           context.commit('ROOMLIST', room)
+        })
+    },
+    GETALLPOKEMON(context) {
+      db.collection('PokemonList')
+        .onSnapshot(querySnapshot => {
+          var pokemon = []
+          querySnapshot.forEach(function (doc) {
+            pokemon.push({
+              id: doc.id,
+              ...doc.data()
+            })
+          })
+          context.commit('POKEMONLIST', pokemon)
         })
     },
     UPDATEROOM(context, id) {

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-            <form @submit.prevent='signUp' class="d-flex input">
+            <form @submit.prevent='login' class="d-flex input">
                   <b-form-input v-model="username" placeholder="Enter your name"></b-form-input>
                   <b-button type="submit" variant="danger">start </b-button>
             </form>
@@ -18,9 +18,11 @@ export default {
         }
     },
     methods:{
-        signUp(){
-            
-        }
+    login() {
+      localStorage.setItem("name", this.username);
+      this.username = "";
+      this.$emit('loginstatus', true)
+    },
     }
 }
 </script>
