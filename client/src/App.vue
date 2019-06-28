@@ -8,7 +8,7 @@
           </div>
         </div>
         <!-- asd -->
-        <div class="row" v-if="isLogin"> 
+        <div class="row" v-if="isLogin">
           <div class="col d-flex justify-content-center">
             <roomlist @createdroom="createdroom"/>
           </div>
@@ -18,22 +18,21 @@
         <h1>WAITING FOR PLAYER</h1>
       </div>
       <div v-if="roomstatus == 'start'">
-      <!-- <div> -->
+        <!-- <div> -->
         <!-- <h1>GAME START</h1> -->
-        <div class="row"  v-if="!battle">
+        <div class="row" v-if="!battle">
           <div class="col">
             <pokemonlist/>
           </div>
         </div>
         <div class="row" v-if="battle && !winner">
-            <playing/>
+          <playing/>
         </div>
         <div class="row" v-if="winner">
           <div class="col d-flex justify-content-center">
-            <winner :win='winner'/>
+            <winner :win="winner"/>
           </div>
         </div>
-        <input type="button" value="Done" @click="gameFinish">
       </div>
     </div>
   </div>
@@ -63,7 +62,7 @@ export default {
       isLogin: false,
       battle: false,
       finish: false,
-      winner: ''
+      winner: ""
     };
   },
   computed: {
@@ -92,9 +91,6 @@ export default {
     },
     loginstatus(data) {
       this.isLogin = data;
-    },
-    gameFinish() {
-      this.$store.dispatch("GAMEFINISH", this.currentroom.id);
     }
   },
   watch: {
@@ -106,22 +102,21 @@ export default {
     // },
     currentroom() {
       console.log("current room berubah", this.currentroom.status);
-      this.roomstatus = this.currentroom.status;
       if (this.currentroom.status == "start") {
         this.createdRoom = false;
       }
       if (this.currentroom !== "") {
+        this.roomstatus = this.currentroom.status;
         this.$store.dispatch("GETCURRENTROOM", this.currentroom.id);
       }
-      if(this.currentroom.pokemon1 && this.currentroom.pokemon2){
-        this.battle = true
+      if (this.currentroom.pokemon1 && this.currentroom.pokemon2) {
+        this.battle = true;
       }
-      if(this.currentroom.pokemon1.health <= 0){
-        this.finish = true
-        this.winner = this.currentroom.pokemon2
-      }else if(this.currentroom.pokemon2.health <= 0){
-        this.finish = true,
-        this.winner = this.currentroom.pokemon1
+      if (this.currentroom.pokemon1.health <= 0) {
+        this.finish = true;
+        this.winner = this.currentroom.pokemon2;
+      } else if (this.currentroom.pokemon2.health <= 0) {
+        (this.finish = true), (this.winner = this.currentroom.pokemon1);
       }
     }
   },
