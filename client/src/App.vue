@@ -116,7 +116,7 @@ export default {
         this.battle = true;
       }
       if (this.currentroom.atk1 && this.currentroom.atk2) {
-        this.$store.dispatch("ATTACK", atk);
+        this.$store.dispatch("ATTACK", this.atk);
       }
       if (this.currentroom.pokemon1.health <= 0) {
         this.finish = true;
