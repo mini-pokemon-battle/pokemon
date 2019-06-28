@@ -7,7 +7,8 @@
             <userInput @loginstatus="loginstatus"/>
           </div>
         </div>
-        <div class="row border" v-if="isLogin">
+        <!-- asd -->
+        <div class="row border" v-if="isLogin"> 
           <div class="col d-flex justify-content-center">
             <roomlist @createdroom="createdroom"/>
           </div>
@@ -16,18 +17,16 @@
       <div v-if="createdRoom">
         <h1>WAITING FOR PLAYER</h1>
       </div>
-      <!-- <div v-if="roomstatus == 'start'"> -->
-      <div>
-        <h1>GAME START</h1>
+      <div v-if="roomstatus == 'start'">
+      <!-- <div> -->
+        <!-- <h1>GAME START</h1> -->
         <div class="row border"  v-if="!battle">
-          <div class="col d-flex justify-content-center">
+          <div class="col">
             <pokemonlist/>
           </div>
         </div>
         <div class="row border" v-if="battle">
-          <div class="col d-flex justify-content-center">
             <playing/>
-          </div>
         </div>
         <div class="row border">
           <div class="col d-flex justify-content-center">

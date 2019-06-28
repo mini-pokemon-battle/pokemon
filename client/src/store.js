@@ -7,9 +7,70 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     rooms: [],
-    currentRoom: '',
+    currentRoom: {
+      pokemon1: {
+        name: 'Charizard',
+        health: 100,
+        attack: [{
+            name: 'ember',
+            point: 20
+          },
+          {
+            name: 'dragon rage',
+            point: 17
+          },
+          {
+            name: 'flamethrower',
+            point: 47
+          },
+          {
+            name: 'inverno',
+            point: 62
+          }
+        ],
+        image: [{
+          cover: 'https://vignette.wikia.nocookie.net/pokemon/images/1/1f/Charizard_BW.gif/revision/latest?cb=20120627233613',
+          attack: [
+            'https://vignette.wikia.nocookie.net/pokemon/images/c/cc/Charizard-AttackAnimation-XY-2.gif/revision/latest/scale-to-width-down/180?cb=20160626213652',
+            'https://vignette.wikia.nocookie.net/pokemon/images/8/8a/Charizard-AttackAnimation-XY-3.gif/revision/latest/scale-to-width-down/180?cb=20160626213751',
+            'https://vignette.wikia.nocookie.net/pokemon/images/2/29/Charizard-AttackAnimation-XY-4.gif/revision/latest/scale-to-width-down/180?cb=20160626213828'
+          ],
+          idle: 'https://vignette.wikia.nocookie.net/pokemon/images/7/74/Charizard_XY.gif/revision/latest?cb=20140319080812'
+
+        }]
+      },
+      pokemon2: {
+        name: 'Gengar',
+        health: 180,
+        attack: [{
+            name: 'curse',
+            point: 12
+          },
+          {
+            name: 'sucker punch',
+            point: 22
+          },
+          {
+            name: 'dream eater',
+            point: 39
+          },
+          {
+            name: 'dark pulse',
+            point: 34
+          }
+        ],
+        image: [{
+          cover: 'https://vignette.wikia.nocookie.net/pokemon/images/2/23/E_094_front.gif/revision/latest?cb=20120626211420',
+          attack: [
+            'https://vignette.wikia.nocookie.net/pokemon/images/3/3e/Gengar_AttackAnimation_1_XY.gif/revision/latest?cb=20140901010946',
+            'https://vignette.wikia.nocookie.net/pokemon/images/6/63/Gengar_AttackAnimation_2_XY.gif/revision/latest?cb=20140901010945'
+          ],
+          idle: 'https://vignette.wikia.nocookie.net/pokemon/images/4/40/Gengar_XY.gif/revision/latest?cb=20140901010937'
+        }]
+      }
+    },
     pokemonlists: [],
-    playerstatus: '',
+    playerstatus: 'player 1',
   },
   mutations: {
     ROOMLIST(state, data) {
@@ -114,6 +175,25 @@ export default new Vuex.Store({
         .catch((err) => {
           console.log(err)
         })
+    },
+    ATTACK(context, data){
+      if(context.playerstatus == 'player 1'){
+        context.currentRoom.pokemon2.health -= data.point
+        db.collection('Room')
+        .doc(context.state.currentRoom.id)
+        .update({
+          ...context.currentRoom
+        })
+        .then(() => {
+          context.dispatch('GETCURRENTROOM', context.state.currentRoom.id)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      }
+      if(context.playerstatus == 'player 2'){
+
+      }
     },
     GAMEFINISH(context, id) {
       localStorage.removeItem('idroom')
