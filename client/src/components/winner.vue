@@ -8,7 +8,6 @@
       style="max-width: 20rem;"
       class="mb-2"
     >
-      <p>{{win.image[0].idle}}</p>
     </b-card>
 
     <input type="button" value="Done" @click="gameFinish">
