@@ -31,7 +31,8 @@ export default new Vuex.Store({
         .doc(context.state.currentRoom.id)
         .update(data)
         .then(() => {
-          context.dispatch('CHECKROOM', context.state.currentRoom.id)
+          // context.dispatch('CHECKROOM', context.state.currentRoom.id)
+          console.log('update')
         })
         .catch((err) => {
           console.log(err)
@@ -75,13 +76,13 @@ export default new Vuex.Store({
           context.commit('ROOMLIST', room)
         })
     },
-    CHECKROOM(context) {
-      db.collection("Room").doc(context.state.currentRoom.id)
-        .onSnapshot((doc) => {
-          context.dispatch('GETCURRENTROOM', doc.id)
-        });
-
-    },
+    // CHECKROOM(context, id) {
+    //   db.collection("Room").doc(id)
+    //     .onSnapshot((doc) => {
+    //       console.log('oncheckroom')
+    //       context.dispatch('GETCURRENTROOM', doc.id)
+    //     });
+    // },
     GETALLPOKEMON(context) {
       db.collection('PokemonList')
         .onSnapshot(querySnapshot => {

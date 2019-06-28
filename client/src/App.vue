@@ -19,12 +19,12 @@
       <!-- <div v-if="roomstatus == 'start'"> -->
       <div>
         <h1>GAME START</h1>
-        <div class="row border">
+        <div class="row border"  v-if="!battle">
           <div class="col d-flex justify-content-center">
             <pokemonlist/>
           </div>
         </div>
-        <div class="row border">
+        <div class="row border" v-if="battle">
           <div class="col d-flex justify-content-center">
             <playing/>
           </div>
@@ -61,7 +61,8 @@ export default {
     return {
       roomstatus: "",
       createdRoom: false,
-      isLogin: false
+      isLogin: false,
+      battle: false
     };
   },
   computed: {
@@ -96,13 +97,13 @@ export default {
     }
   },
   watch: {
-    pkm1() {
-      this.$store.dispatch("GETCURRENTROOM", this.currentroom.id);
-    },
-    pkm2() {
-      this.$store.dispatch("GETCURRENTROOM", this.currentroom.id);
-    },
-    currentroomstatus() {
+    // pkm1() {
+    //   this.$store.dispatch("GETCURRENTROOM", this.currentroom.id);
+    // },
+    // pkm2() {
+    //   this.$store.dispatch("GETCURRENTROOM", this.currentroom.id);
+    // },
+    currentroom() {
       console.log("current room berubah", this.currentroom.status);
       this.roomstatus = this.currentroom.status;
       if (this.currentroom.status == "start") {
@@ -110,6 +111,9 @@ export default {
       }
       if (this.currentroom !== "") {
         this.$store.dispatch("GETCURRENTROOM", this.currentroom.id);
+      }
+      if(this.currentroom.pokemon1 && this.currentroom.pokemon2){
+        this.battle = true
       }
     }
   },
