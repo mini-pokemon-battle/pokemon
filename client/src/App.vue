@@ -16,7 +16,8 @@
       <div v-if="createdRoom">
         <h1>WAITING FOR PLAYER</h1>
       </div>
-      <div v-if="roomstatus == 'start'">
+      <!-- <div v-if="roomstatus == 'start'"> -->
+        <div>
         <h1>GAME START</h1>
         <div class="row border">
           <div class="col d-flex justify-content-center">

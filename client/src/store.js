@@ -8,7 +8,8 @@ export default new Vuex.Store({
   state: {
     rooms: [],
     currentRoom: '',
-    pokemonlists: []
+    pokemonlists: [],
+    currentPkm: []
   },
   mutations: {
     ROOMLIST(state, data) {
@@ -22,6 +23,21 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    UPDATEPKM(context, data) {
+      context.state.currentPkm.push()
+      db.collection('Room')
+        .doc(id)
+        .update({
+          status: 'start',
+          players: context.state.currentRoom.players
+        })
+        .then(() => {
+          context.dispatch('GETCURRENTROOM', id)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
     CREATEROOM(context, data) {
       db.collection('Room')
         .add(data)
