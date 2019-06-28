@@ -79,7 +79,7 @@ export default {
   },
   methods: {
     attack(atkcoince) {
-      this.$store.state.atkcoice = atkcoince
+      this.$store.state.atkcoince = atkcoince
       // this.$store.dispatch('ATTACK', atkcoince)
       this.$store.dispatch('ATTACKSTATUS')
     },
