@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex battle">
+    <div class="d-flex">
         <player/>
         <player />
     </div>

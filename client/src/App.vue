@@ -19,12 +19,11 @@
       <div class="row border">
         <div class="col d-flex justify-content-center">
           <playing/>
-          <playing/>
         </div>
       </div>
       <div class="row border">
         <div class="col d-flex justify-content-center">
-      <winner/>
+          <winner/>
         </div>
       </div>
     </div>
@@ -68,7 +67,5 @@ export default {
 .form-input {
   width: 40rem;
   /* margin-top: 10rem; */
-    
 }
-
 </style>
