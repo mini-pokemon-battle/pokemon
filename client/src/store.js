@@ -177,7 +177,7 @@ export default new Vuex.Store({
         })
     },
     ATTACK(context, data) {
-      if (context.playerstatus == 'player 1') {
+      if (context.state.playerstatus == 'player 1') {
         context.currentRoom.pokemon2.health -= data.point
         db.collection('Room')
           .doc(context.state.currentRoom.id)
@@ -191,7 +191,7 @@ export default new Vuex.Store({
             console.log(err)
           })
       }
-      if (context.playerstatus == 'player 2') {
+      if (context.state.playerstatus == 'player 2') {
         context.currentRoom.pokemon1.health -= data.point
         db.collection('Room')
           .doc(context.state.currentRoom.id)
