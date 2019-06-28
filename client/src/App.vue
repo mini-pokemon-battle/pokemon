@@ -4,7 +4,7 @@
       <div v-if="(roomstatus == 'pending' || roomstatus == '') && !createdRoom">
         <div class="row" v-if="!isLogin">
           <div class="col d-flex justify-content-center form-input">
-            <userInput @loginstatus='loginstatus'/>
+            <userInput @loginstatus="loginstatus"/>
           </div>
         </div>
         <div class="row border" v-if="isLogin">
@@ -17,7 +17,7 @@
         <h1>WAITING FOR PLAYER</h1>
       </div>
       <!-- <div v-if="roomstatus == 'start'"> -->
-        <div>
+      <div>
         <h1>GAME START</h1>
         <div class="row border">
           <div class="col d-flex justify-content-center">
@@ -73,21 +73,36 @@ export default {
     },
     currentroom() {
       return this.$store.state.currentRoom;
+    },
+    currentroomstatus() {
+      return this.$store.state.currentRoom.status;
+    },
+    pkm1() {
+      return this.$store.state.currentRoom.pokemon1;
+    },
+    pkm2() {
+      return this.$store.state.currentRoom.pokemon2;
     }
   },
   methods: {
-    createdroom(data){
-      this.createdRoom = data
+    createdroom(data) {
+      this.createdRoom = data;
     },
-    loginstatus(data){
-      this.isLogin = data
+    loginstatus(data) {
+      this.isLogin = data;
     },
     gameFinish() {
       this.$store.dispatch("GAMEFINISH", this.currentroom.id);
-    },
+    }
   },
   watch: {
-    currentroom() {
+    pkm1() {
+      this.$store.dispatch("GETCURRENTROOM", this.currentroom.id);
+    },
+    pkm2() {
+      this.$store.dispatch("GETCURRENTROOM", this.currentroom.id);
+    },
+    currentroomstatus() {
       console.log("current room berubah", this.currentroom.status);
       this.roomstatus = this.currentroom.status;
       if (this.currentroom.status == "start") {

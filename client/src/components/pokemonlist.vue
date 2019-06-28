@@ -2,9 +2,10 @@
   <div class="container-fluid">
     <h2>Choose Your Pokemon</h2>
     <div class="d-flex row">
-        <div v-for="(pkm, i) in pkmlist" :key="i" class="col-1">
-          <eachpokemon :pkm="pkm" @click="choosepkm(pkm)"/>
-        </div>
+      <div v-for="(pkm, i) in pkmlist" :key="i" class="col-2">
+        <eachpokemon :pkm="pkm"/>
+        <button @click="choosepkm(pkm)">Choose {{pkm.name}}</button>
+      </div>
     </div>
   </div>
 </template>
@@ -19,17 +20,28 @@ export default {
   computed: {
     pkmlist() {
       return this.$store.state.pokemonlists;
+    },
+    playerstatus() {
+      return this.$store.state.playerstatus;
     }
   },
   methods: {
-      choosepkm(pkm){
-          this.$store.dispatch("UPDATEPKM", 
-          {
-              name: localStorage.name,
-              pokemon : pkm
-          })
+    choosepkm(pkm) {
+      console.log("cliked");
+      if (this.playerstatus == "player 1") {
+        this.$store.dispatch("UPDATEPKM", {
+          name: localStorage.name,
+          pokemon1: pkm
+        });
       }
-  },
+      if (this.playerstatus == "player 2") {
+        this.$store.dispatch("UPDATEPKM", {
+          name: localStorage.name,
+          pokemon2: pkm
+        });
+      }
+    }
+  }
 };
 </script>
 

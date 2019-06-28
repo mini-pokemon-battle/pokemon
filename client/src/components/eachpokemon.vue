@@ -1,9 +1,7 @@
 <template>
   <div>
-    <span>
-      <b-img :src="pkm.image[0].cover" fluid alt="Fluid image"></b-img>
+      <img :src="pkm.image[0].cover" fluid alt="Fluid image"  style="width: 130px" height=" 110px"/>
       <h5>{{pkm.name}}</h5>
-    </span>
   </div>
 </template>
 

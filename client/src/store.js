@@ -9,7 +9,7 @@ export default new Vuex.Store({
     rooms: [],
     currentRoom: '',
     pokemonlists: [],
-    currentPkm: []
+    playerstatus: '',
   },
   mutations: {
     ROOMLIST(state, data) {
@@ -20,19 +20,18 @@ export default new Vuex.Store({
     },
     CURRENTROOM(state, data) {
       state.currentRoom = data
+    },
+    CURRENTPKM(state, data) {
+      state.currentRoom = data
     }
   },
   actions: {
     UPDATEPKM(context, data) {
-      context.state.currentPkm.push()
       db.collection('Room')
-        .doc(id)
-        .update({
-          status: 'start',
-          players: context.state.currentRoom.players
-        })
+        .doc(context.state.currentRoom.id)
+        .update(data)
         .then(() => {
-          context.dispatch('GETCURRENTROOM', id)
+          context.dispatch('CHECKROOM', context.state.currentRoom.id)
         })
         .catch((err) => {
           console.log(err)
@@ -43,6 +42,7 @@ export default new Vuex.Store({
         .add(data)
         .then((doc) => {
           context.dispatch('GETCURRENTROOM', doc.id)
+          context.state.playerstatus = 'player 1'
         })
         .catch((err) => {
           console.log(err)
@@ -53,7 +53,10 @@ export default new Vuex.Store({
         .doc(id)
         .get()
         .then((doc) => {
-          context.commit('CURRENTROOM', {id: doc.id, ...doc.data()})
+          context.commit('CURRENTROOM', {
+            id: doc.id,
+            ...doc.data()
+          })
         })
         .catch((err) => {
           console.log(err)
@@ -71,6 +74,13 @@ export default new Vuex.Store({
           })
           context.commit('ROOMLIST', room)
         })
+    },
+    CHECKROOM(context) {
+      db.collection("Room").doc(context.state.currentRoom.id)
+        .onSnapshot((doc) => {
+          context.dispatch('GETCURRENTROOM', doc.id)
+        });
+
     },
     GETALLPOKEMON(context) {
       db.collection('PokemonList')
@@ -98,24 +108,26 @@ export default new Vuex.Store({
         })
         .then(() => {
           context.dispatch('GETCURRENTROOM', id)
+          context.state.playerstatus = 'player 2'
         })
         .catch((err) => {
           console.log(err)
         })
     },
-    GAMEFINISH(context, id){
-      db.collection('Room')
-      .doc(id)
-      .update({
-        status: 'start',
-        players: context.state.currentRoom.players
-      })
-      .then(() => {
-        context.dispatch('GETCURRENTROOM', id)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    GAMEFINISH(context, id) {
+      localStorage.removeItem('idroom')
+      // db.collection('Room')
+      //   .doc(id)
+      //   .update({
+      //     status: 'start',
+      //     players: context.state.currentRoom.players
+      //   })
+      //   .then(() => {
+      //     context.dispatch('GETCURRENTROOM', id)
+      //   })
+      //   .catch((err) => {
+      //     console.log(err)
+      //   })
     }
   }
 })
