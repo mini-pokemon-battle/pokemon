@@ -8,7 +8,7 @@
           </div>
         </div>
         <!-- asd -->
-        <div class="row border" v-if="isLogin"> 
+        <div class="row" v-if="isLogin"> 
           <div class="col d-flex justify-content-center">
             <roomlist @createdroom="createdroom"/>
           </div>
@@ -20,17 +20,17 @@
       <div v-if="roomstatus == 'start'">
       <!-- <div> -->
         <!-- <h1>GAME START</h1> -->
-        <div class="row border"  v-if="!battle">
+        <div class="row"  v-if="!battle">
           <div class="col">
             <pokemonlist/>
           </div>
         </div>
-        <div class="row border" v-if="battle">
+        <div class="row" v-if="battle && !winner">
             <playing/>
         </div>
-        <div class="row border">
+        <div class="row" v-if="winner">
           <div class="col d-flex justify-content-center">
-            <winner/>
+            <winner :win='winner'/>
           </div>
         </div>
         <input type="button" value="Done" @click="gameFinish">
@@ -61,7 +61,9 @@ export default {
       roomstatus: "",
       createdRoom: false,
       isLogin: false,
-      battle: false
+      battle: false,
+      finish: false,
+      winner: ''
     };
   },
   computed: {
@@ -113,6 +115,13 @@ export default {
       }
       if(this.currentroom.pokemon1 && this.currentroom.pokemon2){
         this.battle = true
+      }
+      if(this.currentroom.pokemon1.health <= 0){
+        this.finish = true
+        this.winner = this.currentroom.pokemon2
+      }else if(this.currentroom.pokemon2.health <= 0){
+        this.finish = true,
+        this.winner = this.currentroom.pokemon1
       }
     }
   },

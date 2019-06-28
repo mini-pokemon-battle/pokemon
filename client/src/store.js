@@ -208,18 +208,9 @@ export default new Vuex.Store({
     },
     GAMEFINISH(context, id) {
       localStorage.removeItem('idroom')
-      // db.collection('Room')
-      //   .doc(id)
-      //   .update({
-      //     status: 'start',
-      //     players: context.state.currentRoom.players
-      //   })
-      //   .then(() => {
-      //     context.dispatch('GETCURRENTROOM', id)
-      //   })
-      //   .catch((err) => {
-      //     console.log(err)
-      //   })
+      db.collection('Room')
+        .doc(id)
+        .delete()
     }
   }
 })
