@@ -176,23 +176,34 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
-    ATTACK(context, data){
-      if(context.playerstatus == 'player 1'){
+    ATTACK(context, data) {
+      if (context.playerstatus == 'player 1') {
         context.currentRoom.pokemon2.health -= data.point
         db.collection('Room')
-        .doc(context.state.currentRoom.id)
-        .update({
-          ...context.currentRoom
-        })
-        .then(() => {
-          context.dispatch('GETCURRENTROOM', context.state.currentRoom.id)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+          .doc(context.state.currentRoom.id)
+          .update({
+            ...context.currentRoom
+          })
+          .then(() => {
+            context.dispatch('GETCURRENTROOM', context.state.currentRoom.id)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
       }
-      if(context.playerstatus == 'player 2'){
-
+      if (context.playerstatus == 'player 2') {
+        context.currentRoom.pokemon1.health -= data.point
+        db.collection('Room')
+          .doc(context.state.currentRoom.id)
+          .update({
+            ...context.currentRoom
+          })
+          .then(() => {
+            context.dispatch('GETCURRENTROOM', context.state.currentRoom.id)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
       }
     },
     GAMEFINISH(context, id) {

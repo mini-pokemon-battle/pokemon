@@ -79,6 +79,7 @@ export default {
   },
   methods: {
     attack(atkcoince) {
+      this.$store.dispatch('ATTACK', atkcoince)
     },
   },
   computed: {
