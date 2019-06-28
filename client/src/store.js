@@ -10,6 +10,7 @@ export default new Vuex.Store({
     currentRoom: {},
     pokemonlists: [],
     playerstatus: '',
+    atkcoince: ''
   },
   mutations: {
     ROOMLIST(state, data) {
@@ -125,6 +126,7 @@ export default new Vuex.Store({
           })
           .then(() => {
             context.dispatch('GETCURRENTROOM', context.state.currentRoom.id)
+            context.dispatch('ATKFALSE')
           })
           .catch((err) => {
             console.log(err)
@@ -139,11 +141,54 @@ export default new Vuex.Store({
           })
           .then(() => {
             context.dispatch('GETCURRENTROOM', context.state.currentRoom.id)
+            context.dispatch('ATKFALSE')
           })
           .catch((err) => {
             console.log(err)
           })
       }
+    },
+    ATTACKSTATUS(context){
+      if (context.state.playerstatus == 'player 1') {
+        db.collection('Room')
+          .doc(context.state.currentRoom.id)
+          .update({
+            atk1: true
+          })
+          .then(() => {
+            context.dispatch('GETCURRENTROOM', context.state.currentRoom.id)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      }
+      if (context.state.playerstatus == 'player 2') {
+        db.collection('Room')
+          .doc(context.state.currentRoom.id)
+          .update({
+            atk2: true
+          })
+          .then(() => {
+            context.dispatch('GETCURRENTROOM', context.state.currentRoom.id)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      }
+    },
+    ATKFALSE(){
+      db.collection('Room')
+          .doc(context.state.currentRoom.id)
+          .update({
+            atk1: false,
+            atk2: false
+          })
+          .then(() => {
+            context.dispatch('GETCURRENTROOM', context.state.currentRoom.id)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
     },
     GAMEFINISH(context, id) {
       context.state.currentRoom = ""

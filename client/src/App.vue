@@ -83,6 +83,9 @@ export default {
     },
     pkm2() {
       return this.$store.state.currentRoom.pokemon2;
+    },
+    atk() {
+      return this.$store.state.currentRoom.atkcoince;
     }
   },
   methods: {
@@ -111,6 +114,9 @@ export default {
       }
       if (this.currentroom.pokemon1 && this.currentroom.pokemon2) {
         this.battle = true;
+      }
+      if (this.currentroom.atk1 && this.currentroom.atk2) {
+        this.$store.dispatch("ATTACK", atk);
       }
       if (this.currentroom.pokemon1.health <= 0) {
         this.finish = true;

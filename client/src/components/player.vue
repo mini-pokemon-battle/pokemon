@@ -79,7 +79,9 @@ export default {
   },
   methods: {
     attack(atkcoince) {
-      this.$store.dispatch('ATTACK', atkcoince)
+      this.$store.state.atkcoice = atkcoince
+      // this.$store.dispatch('ATTACK', atkcoince)
+      this.$store.dispatch('ATTACKSTATUS')
     },
   },
   computed: {
